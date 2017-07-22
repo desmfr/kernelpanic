@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kernel Panic</title>
+    <description>blog de francois desmier</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 22 Jul 2017 18:58:44 +0200</pubDate>
+    <lastBuildDate>Sat, 22 Jul 2017 18:58:44 +0200</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Gnome-shell extensions : ma séléction</title>
+        <description>&lt;h2&gt;Gnome-shell&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://wiki.gnome.org/Projects/GnomeShell&quot;&gt;&lt;strong&gt;Gnome-shell&lt;/strong&gt;&lt;/a&gt; est un environnement de bureau pour Linux, très ergonomique, léger, customisable, et beau… et aujourd’hui carrément stable, en plus. Je l’utilise pour ma part sous &lt;a href=&quot;https://archlinux.fr/&quot;&gt;Archlinux&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://wiki.gnome.org/Projects/GnomeShell&quot;&gt;&lt;strong&gt;Gnome-shell&lt;/strong&gt;&lt;/a&gt; a la particularité de proposer un &lt;a href=&quot;https://extensions.gnome.org/&quot;&gt;catalogue d’extensions&lt;/a&gt; consultables et installables directement depuis votre navigateur (utilisateur de Chrome/Chromium, le plugin du site n’est pas supporté, pour aller au plus simple : utiliser Firefox pour vous y rendre, ou sinon aller télécharger les archives sur GitHub et installer les à coups de clics avec &lt;em&gt;gnome-tweeak-tool&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;On y trouve un peu de tout, beaucoup de gadget sans grand intérêt, mais aussi de petites pépites et c’est quelques unes de celle ci que je vais vous présenter (la qualification de pépite relevant bien évidemment de mon entière subjectivité).&lt;/p&gt;
+
+&lt;h2&gt;Les extensions qui vont bien&lt;/h2&gt;
+
+&lt;p&gt;J’ai donc présélectionné quatre d’entre elles, en esquivant volontairement les incontournables (&lt;em&gt;Docker Status&lt;/em&gt;, &lt;em&gt;Proxy switcher&lt;/em&gt;, &lt;em&gt;Dash to dock&lt;/em&gt;, &lt;em&gt;Activities configurator&lt;/em&gt;…).&lt;/p&gt;
+
+&lt;h3&gt;Drop down terminal&lt;/h3&gt;
+&lt;p&gt;Avoir un shell à porter de main pour lancer une commande en speed, un &lt;code class=&quot;highlighter-rouge&quot;&gt;yaourt -Syua&lt;/code&gt;, un &lt;code class=&quot;highlighter-rouge&quot;&gt;systemctl status tor&lt;/code&gt; ou que sais-je… Pratique non?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://pix.blizzart.net/image/1477331453/original.jpg&quot; alt=&quot;Drop down terminal&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Accessible en une touche (configurable), &lt;em&gt;Drop down terminal&lt;/em&gt; est là pour ça. Aussitôt pressée (la touche) qu’un terminal descend du ciel, enfin de votre barre des tâches, et s’offre à vous.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/zzrough/gs-extensions-drop-down-terminal&quot;&gt;Sur GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Windows blur effect&lt;/h3&gt;
+
+&lt;p&gt;Si comme moi vous errez sur votre poste de travail avec de multiples applications ouvertes, rarement en plein écran, vos yeux sauront dire merci à cette extension.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://pix.blizzart.net/image/1477331709/original.jpg&quot; alt=&quot;Windows blur effect&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Windows blur effect&lt;/em&gt; a pour particularité de flouter et d’assombrir (à votre guise via les paramètres depuis &lt;em&gt;gnowe-tweak-tool&lt;/em&gt; bien sûr) les fenêtres en arrière plan. Très reposant, et assez sexy.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/lviggiani/gnome-shell-extension-wbe&quot;&gt;Sur GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Services systemd&lt;/h3&gt;
+
+&lt;p&gt;Cette extension est moins tape à l’oeil, mais très pratique pour relancer ou stopper des services en un clic.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://pix.blizzart.net/image/1477332125/original.jpg&quot; alt=&quot;Services systemd&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On accède directement via une icône placé dans la barre des tâches à une liste de services à définir nous même via les paramètres. Bien entendu un mot de passe vous sera demander si vous n’êtes pas connecté en root sur votre interface graphique.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/petres/gnome-shell-extension-services-systemd&quot;&gt;Sur GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Archlinux update indicator&lt;/h3&gt;
+
+&lt;p&gt;Une extension exclusive à &lt;a href=&quot;https://archlinux.fr/&quot;&gt;Archlinux&lt;/a&gt;, un indicateur des mises à jour disponibles (comme son nom l’indique oui) permettant un coup d’œil rapide à l’état de son système.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://pix.blizzart.net/image/1477332314/original.jpg&quot; alt=&quot;Archlinux update indicator&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On peut paramétrer le gestionnaire de paquets utilisé et les commandes induites.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/RaphaelRochet/arch-update&quot;&gt;Sur GitHub&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 24 Nov 2016 19:21:19 +0100</pubDate>
+        <link>http://localhost:4000/linux/2016/11/24/Gnome-shell-extensions.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/2016/11/24/Gnome-shell-extensions.html</guid>
+        
+        
+        <category>linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Watch face : All about squares</title>
+        <description>&lt;h2&gt;Forerunner 235&lt;/h2&gt;
+
+&lt;p&gt;Etant obligé de recoller soigneusement le bracelet de ma vieille &lt;strong&gt;Forerunner 10&lt;/strong&gt; avant chaque utilisation, j’ai pris la décision courageuse de renouveler mon équipement… J’ai donc fait l’acquisition chez &lt;em&gt;EvilCorp&lt;/em&gt; d’une Garmin &lt;strong&gt;Forerunner 235&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Plein d’options bullshit aussitôt désactivées (tracker de pas, notifications du téléphone…) me voilà avec une montre bien sympathique, un capteur cardiaque au poignet plutôt efficace, un bel écran ou je peux définir exactement ce que j’ai envie d’y voir… Mais il me manquait encore la petite touche perso, la petite customisation de derrière les fagots, le détail geek qui change tout… et je l’ai trouvé sur &lt;strong&gt;Connect IQ&lt;/strong&gt;, la plateforme d’apps de &lt;strong&gt;Garmin&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2&gt;All about squares&lt;/h2&gt;
+
+&lt;p&gt;Il s’agit donc d’une “watch face” &lt;a href=&quot;https://apps.garmin.com/fr-FR/apps/bf16deb2-8fb0-466b-8a34-a568470cd974&quot;&gt;All About Squares&lt;/a&gt;, autrement dit d’une forme de cadran pour afficher l’heure de façon un peu originale et… so geek!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://services.garmin.com/appsLibraryBusinessServices_v0/rest/apps/bf16deb2-8fb0-466b-8a34-a568470cd974/icon/7bf94e69-12d3-4a1c-975d-020850e5e5d9&quot; alt=&quot;all about squares&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Voici comment on doit lire et interpréter cet écran somme toute magnifique:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;La colonne grise la plus à gauche : le niveau de la batterie&lt;/li&gt;
+  &lt;li&gt;Le bloc principal de gauche (colonne violette/bleue) : les heures&lt;/li&gt;
+  &lt;li&gt;Le bloc principal de droite (colonne verte/orange) : les minutes par paquet de 5&lt;/li&gt;
+  &lt;li&gt;La colonne blanche la plus à droite : les minutes à l’unité&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sur l’image exemple il est donc 8h56… vous suivez? :)&lt;/p&gt;
+
+&lt;p&gt;Mais si!&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;6 violets + 2 bleus = 8 heures&lt;/li&gt;
+  &lt;li&gt;6 verts (x 5 minutes) + 5 oranges (x 5 minutes) + 1 unité de minute = 30 + 25 +1 = 56 minutes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Allez on file sur un deuxième exemple…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://lh3.googleusercontent.com/BnW0wWnogByhEiLTzFRJOoEcF0_CAPhpoSupoDACieGB3cnu92cohBg76Pj1-HdGd26B-F8psAO1YLiqqIhti3ma7cIwuKlCWB7i7q_knixZw8ppo4RDGHL5zjlu1N5hMkg2jmUTsdr2p0FRN1azYxsFAYLEh3dKpgSV7b-hB37j4cfB9pWHKQy8aPnyuH7sY-E1P9JpvdR_7Bg8ZNfIqE4Krk-CVZswKSS9bQS6ePUrGVLP7qEWwCGlp9he_5bOmh967DuPuWf8ltNdXaYaQM-bSNM_6ILb-aJYIMM1tm-TlmEarCFVUxOvaJe-IiD63UI1GIjtLSgShFd_eCW-liz0t5ui2waILvlmPCejSuMV9TmS7ueVJN5f-Tpzt9UE0eo1GRMa2D0J99UUWQ7taDgD-Y_71-zX-Do6ky2LjleACG_zubBqbZ71MgSVfzI8jPB8-bGE45-SS39PXR4ZspYChqjQIQJOfVWdlaapHaqnRAv99jy2WZX7RUKZRLfuZa3FAhFbtbcquiJGat3UZMJmrz_RSMTjp-RmiKP7iGV--8khLFXZfqK3eb4A2rw7JwQHyu2KgsplDOzIyR4Lkm4W0_7P4nl9HTVGw_un15BBfqRi=w469-h833-no&quot; alt=&quot;ma montre&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Il est donc… 11h16 (easy!!).&lt;/p&gt;
+
+&lt;p&gt;Tout ça paraît un peu voir complètement useless, mais c’est le détail qui change tout. On s’habitue très vite à lire l’heure ainsi, c’est juste beau, original et terriblement geek.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 23 Oct 2016 12:03:19 +0200</pubDate>
+        <link>http://localhost:4000/running/2016/10/23/watch-face.html</link>
+        <guid isPermaLink="true">http://localhost:4000/running/2016/10/23/watch-face.html</guid>
+        
+        
+        <category>running</category>
+        
+      </item>
+    
+  </channel>
+</rss>
