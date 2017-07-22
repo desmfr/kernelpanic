@@ -5,9 +5,178 @@
     <description>blog de francois desmier</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 22 Jul 2017 21:06:09 +0200</pubDate>
-    <lastBuildDate>Sat, 22 Jul 2017 21:06:09 +0200</lastBuildDate>
+    <pubDate>Sat, 22 Jul 2017 22:45:37 +0200</pubDate>
+    <lastBuildDate>Sat, 22 Jul 2017 22:45:37 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Mon mediacenter de Arch à Z</title>
+        <description>&lt;p&gt;Pour se monter un mediacenter aujourd’hui, on a l’embarras du choix des solutions clé en main (aka je sais pas ce que je fais mais ça marche) avec des trucs comme open-elec sur Raspberry, Plex etc.&lt;/p&gt;
+
+&lt;p&gt;Mais justement si on veut comprendre un peu ce qui se passe et comment ça marche, je trouve ça plutôt cool de se l’installer soit même son mediacenter.&lt;/p&gt;
+
+&lt;h2&gt;La base&lt;/h2&gt;
+
+&lt;p&gt;Pour ce faire on partira sur la stack suivante:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;hardware : Un Raspberry Pi2 et un disque dur usb2 externe (gros stockage pour pas cher et pas de besoin de perfs)&lt;/li&gt;
+  &lt;li&gt;Distribution Linux : Archlinux ARMv7 (la version qui va bien pour le Pi2)&lt;/li&gt;
+  &lt;li&gt;Mediacenter : &lt;em&gt;Kodi 17&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Make it&lt;/h2&gt;
+
+&lt;h3&gt;1 On flash une carte micro SD&lt;/h3&gt;
+
+&lt;p&gt;Pour préparer la carte micro SD (de préférences une classe 10, 8Go suffisent mais à on est large et à l’aise à partir de 16), on peut le faire en ligne de commande mais moi j’ai usé de &lt;a href=&quot;http://gparted.org/&quot;&gt;GParted&lt;/a&gt; (j’use beaucoup de GParted dans ma vie).&lt;/p&gt;
+
+&lt;p&gt;Il faut créer deux partitions, une première en FAT32 (oué oué en FAT32) de 512 Mo, et la deuxième en EXT4 (\o/) qui prend toute la place qui reste. On tag la première &lt;code class=&quot;highlighter-rouge&quot;&gt;boot&lt;/code&gt; et la seconde &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; (si si ca simplifie la vie ensuite).&lt;/p&gt;
+
+&lt;p&gt;On se retrouve donc ainsi:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;/dev/mmcblk1p1 - FAT32 - boot - 512Mo&lt;/li&gt;
+  &lt;li&gt;/dev/mmcblk1p2 - EXT4 - root - le reste des Mo&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Maintenant on va créer les points de montage &lt;code class=&quot;highlighter-rouge&quot;&gt;/mnt/boot&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;/mnt/root&lt;/code&gt; (faudra passer en &lt;em&gt;root&lt;/em&gt; à ce moment là)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /mnt
+mkdir boot root&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Puis on y monte les deux partitions dans le carte&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mount /dev/mmcblk1p1 boot
+mount /dev/mmcblk1p2 root&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;On récupère la &lt;a href=&quot;http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz&quot;&gt;dernière version d’Archlinux ARMv7 disponible&lt;/a&gt; et on l’extrait dans le dossier &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C root
+sync&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Il faut bien penser au &lt;code class=&quot;highlighter-rouge&quot;&gt;sync&lt;/code&gt; car les cartes micro SD sont taquines. Il faut d’ailleurs pas hésiter à répeter cette opération dès qu’on écrit dessus.&lt;/p&gt;
+
+&lt;p&gt;On déplace le contenur du dossier &lt;code class=&quot;highlighter-rouge&quot;&gt;./root/boot&lt;/code&gt; dans &lt;code class=&quot;highlighter-rouge&quot;&gt;./boot&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mv root/boot/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; boot
+sync&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Et voilà on est prêt à faire booter le Pi2 sur notre carte micro SD avec Archlinux dessus ;) Tout cette première étape est en fait détaillée &lt;a href=&quot;https://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2&quot;&gt;ici&lt;/a&gt; avec les lignes de commandes pour créer les partitions.&lt;/p&gt;
+
+&lt;p&gt;Mais avant de démonter nos deux partitions pour récupérer la carte, on peut profiter du moment pour apporter nos premières modifs au système :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;On size comme il faut la mémoire vidéo du Pi2 en lui allouant 512Mo (on peut faire avec moins aussi) en modifiant le fichier &lt;code class=&quot;highlighter-rouge&quot;&gt;./boot/config.txt&lt;/code&gt; comme ceci : gpu_mem=512&lt;/li&gt;
+  &lt;li&gt;On peut également déjà mettre à jour le fichier &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/fstab&lt;/code&gt; pour automatiser le montage de notre disque usb externe en rajoutant des lignes du style :&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# /dev/sdaX LABEL=Media&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;UUID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;UUID-DE-LA-PARTITION /mon/chemin/de/montage ext4 rw,relatime,data&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ordered 0 2&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;On oublie pas le petit sync des familles et on peut maintenant démonter notre carte micro SD.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sync &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; umount boot root&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;2 on fait booter le Pi2 sur la carte micro SD&lt;/h3&gt;
+
+&lt;p&gt;On insère donc la carte dans le Pi2 et on démarre dessus. On a un système Archlinux vierge, on peut s’y connecter avec les users par défaut &lt;em&gt;alarm&lt;/em&gt; (mot de passe &lt;em&gt;alarm&lt;/em&gt;) et &lt;em&gt;root&lt;/em&gt; (mot de passe &lt;em&gt;root&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Alors on s’y connecte, en &lt;em&gt;root&lt;/em&gt; tant qu’on y est, et on se dépêche de changer le mot de passe!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;passwd&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Là c’est le moment on fait quelques bidouilles pour se mettre bien :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;on choisit notre hostname, pour moi c’est arch-pi2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;arch-pi2 &amp;gt; /etc/hostname&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;on cale le fuseau horaire&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#rm /etc/localtime avant si conflit&lt;/span&gt;
+ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;On va décommenter notre petite ligne &lt;em&gt;fr_FR.UTF-8 UTF-8&lt;/em&gt; dans le fichier &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/locale.gen&lt;/code&gt; puis on balance les locales et la keymap&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;locale-gen
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LANG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fr_FR.UTF-8&quot;&lt;/span&gt; &amp;gt; /etc/locale.conf
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;KEYMAP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;fr &amp;gt; /etc/vconsole.conf&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;On init NTP, parce que c’est comme ça (en vrai ca va servir ensuite quand on voudra partager nos films et notre musique sur notre réseau local)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;timedatectl &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;-ntp &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;(on peut retrouver tout ça plus en détail sur le &lt;a href=&quot;https://wiki.archlinux.fr/Installation&quot;&gt;wiki Archlinux&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Là on peut rebooter pour bien checker que tout démarre sans erreur et que nos modifs sont bien prises en compte (un petit &lt;code class=&quot;highlighter-rouge&quot;&gt;sync&lt;/code&gt; avant le reboot ça mange pas de pain)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sync &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sync &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sync &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;On se reconnecte en &lt;em&gt;root&lt;/em&gt; avec notre nouveau mot de passe et on balance un mise à jour globale du système :&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;pacman -Syu&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Déjà on va faire le ménage en supprimant le user par défaut &lt;em&gt;alarm&lt;/em&gt; et en créant le notre :&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;useradd -g users -G wheel -m moi
+passwd moi
+userdel alarm
+rm -rf /home/alarm&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Puis on se fait plaisir en donnant à son user un shell qui roxx de la licorne (étape très facultative)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;pacman -Sy fish
+chsh -s /usr/bin/fish moi&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;3 Voilà le mediacenter!&lt;/h3&gt;
+
+&lt;p&gt;Toujours connecté en &lt;em&gt;root&lt;/em&gt;, on peut enfin installer Kodi, notre mediacenter (le deuxième paquet &lt;code class=&quot;highlighter-rouge&quot;&gt;libcec-rpi&lt;/code&gt; sert à ce que la télécommande native de votre télé puisse piloter le mediacenter)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;pacman -Sy kodi-rbp libcec-rpi&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Là on se déconnecte de &lt;em&gt;root&lt;/em&gt; pour se reconnecter avec son user, et on peut lancer &lt;code class=&quot;highlighter-rouge&quot;&gt;kodi&lt;/code&gt;, le tour est joué! Il ne vous reste plus qu’à définir dedans vos sources de fichiers pour construire votre médiathèque.&lt;/p&gt;
+
+&lt;h3&gt;4 Et si on partageait nos dossiers média à nos autres devices?&lt;/h3&gt;
+
+&lt;p&gt;Easy, on va installer nfs!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;pacman -Sy nfs-utils&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;De là on édite le fichier &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/exports&lt;/code&gt; en ajoutant nos partages, avec des lignes dans ce genre :&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;/mon/chemin/de/montage/local 192.168.1.1/24&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;rw,insecure,anonuid&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000,anongid&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;100,no_subtree_check&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;On démarre maintenant le démon nfs et on l’active au boot&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;nfs-server&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Si votre démon run déjà, vous pouvez charger votre nouvelle conf avec&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;exportfs -rav&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Vos filesystems partagés sont désormais accesibles via vos autres devices clients nfs :) Notez que sur android il faut avoir rooté son matos pour pouvoir lire les partages nfs :/&lt;/p&gt;
+
+&lt;p&gt;La config nfs est assez obscure, vous trouverez des infos &lt;a href=&quot;https://wiki.archlinux.fr/NFS&quot;&gt;ici&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;5 Et après?&lt;/h3&gt;
+&lt;p&gt;Kodi tourne sans installer &lt;code class=&quot;highlighter-rouge&quot;&gt;xorg-server&lt;/code&gt; explicitement, mais n’éhsitez pas à le faire si vous voulez approfondir les bidouilles (&lt;a href=&quot;https://wiki.archlinux.fr/Xorg&quot;&gt;doc ici&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;à bientôt :)&lt;/p&gt;
+</description>
+        <pubDate>Sat, 22 Jul 2017 12:21:19 +0200</pubDate>
+        <link>http://localhost:4000/linux/2017/07/22/arch-pi-kodi.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/2017/07/22/arch-pi-kodi.html</guid>
+        
+        
+        <category>linux</category>
+        
+      </item>
     
       <item>
         <title>Gnome-shell extensions : ma séléction</title>
